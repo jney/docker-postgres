@@ -12,7 +12,7 @@ MAINTAINER John Allen <john.allen@connexiolabs.com>
 ENV PG_EXTENSION_VERSION 9.3
 ENV POSTGIS_VERSION 2.1
 ENV TEMPORAL_TABLES_VERSION 1.0.1
-ENV MONGODB_VERSION 2.0.0
+ENV MONGO_FWD_VERSION 3.0
 ENV HASHTYPES_VERSION 0.1.1
 
 WORKDIR /tmp
@@ -44,12 +44,11 @@ RUN apt-get -y update && \
     # mongo_fdw
     wget --quiet \
         --no-check-certificate \
-        -O mongo_fdw-$MONGODB_VERSION.zip \
-        http://api.pgxn.org/dist/mongo_fdw/$MONGODB_VERSION/mongo_fdw-$MONGODB_VERSION.zip && \
-    unzip mongo_fdw-$MONGODB_VERSION && \
-    cd /tmp/mongo_fdw-$MONGODB_VERSION && \
+        -O mongo_fdw-$MONGO_FWD_VERSION.zip \
+        https://github.com/EnterpriseDB/mongo_fdw/archive/v$MONGO_FWD_VERSION.zip && \
+    unzip mongo_fdw-$MONGO_FWD_VERSION.zip && \
+    cd /tmp/mongo_fdw-$MONGO_FWD_VERSION && \
     make clean && \
-    make -C mongo-c-driver-v0.6 all && \
     make && \
     make install && \
     cd /tmp && \
